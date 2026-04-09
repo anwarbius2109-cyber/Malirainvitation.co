@@ -1,12 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 
 body {
-  background-color: #f6f2ff;
+  background: linear-gradient(135deg, #f6f2ff, #efe9ff);
   color: #2d1b4e;
   line-height: 1.6;
   font-family: "Urbanist", sans-serif;
 }
 
+/* HEADING */
 h1,
 h2,
 h3 {
@@ -15,54 +16,63 @@ h3 {
 }
 
 h1 {
-  color: #4b2e83;
+  color: #5a35c5;
 }
 
-/* PRIMARY (UNGU UTAMA) */
+/* PRIMARY (UNGU UTAMA - LEBIH HIDUP) */
 .bg-primary {
-  background-color: #7b4bff;
+  background: linear-gradient(135deg, #7b4bff, #9f7bff);
   color: #ffffff;
+  box-shadow: 0 8px 20px rgba(123, 75, 255, 0.3);
 }
 
 .hover\:bg-primary:hover {
-  background-color: #6936f5;
+  background: linear-gradient(135deg, #6936f5, #8b66ff);
 }
 
 .hover\:text-primary:hover {
   color: #7b4bff;
 }
 
-/* SECONDARY (UNGU MUDA / SOFT) */
+/* SECONDARY (UNGU SOFT BACKGROUND) */
 .bg-secondary {
-  background-color: #efe9ff;
+  background: #f1edff;
   color: #2d1b4e;
 }
 
 .hover\:bg-secondary:hover {
-  background-color: #ddd3ff;
+  background: #e4dcff;
 }
 
 .border-secondary {
-  border-color: #e4dbff;
+  border-color: #ddd3ff;
 }
 
 /* CARD */
 .bg-card {
-  background-color: #ffffff;
+  background: #ffffff;
   color: #2d1b4e;
   box-shadow: 0 10px 25px rgba(123, 75, 255, 0.15);
+  border: 1px solid #eee9ff;
+  transition: 0.3s;
+}
+
+.bg-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(123, 75, 255, 0.25);
 }
 
 /* NAVBAR */
 .navbar {
-  background-color: #ffffff;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
   color: #2d1b4e;
   box-shadow: 0 5px 15px rgba(123, 75, 255, 0.1);
 }
 
 /* GRADIENT TEXT */
 .text-gradient {
-  background-image: linear-gradient(45deg, #7b4bff, #b892ff);
+  background-image: linear-gradient(45deg, #7b4bff, #c6b8ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -76,4 +86,19 @@ h1 {
 .btn {
   text-transform: uppercase;
   letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+/* HOVER EFFECT GLOBAL */
+a, button {
+  transition: all 0.3s ease;
+}
+
+a:hover, button:hover {
+  transform: translateY(-2px);
+}
+
+/* OPTIONAL GLOW EFFECT */
+.glow {
+  box-shadow: 0 0 15px rgba(123, 75, 255, 0.4);
 }
