@@ -916,7 +916,9 @@ setTimeout(() => {
       item.style.display = "none";
     }
   });
-});
+});} catch (error) {
+  console.error("ERROR:", error);
+}
 
         card.innerHTML = `
           <div class="bg-card rounded shadow-lg hover:shadow-2xl transition duration-300">
