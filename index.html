@@ -885,8 +885,10 @@
       btn.style.display = "none";
     }
 
-  } catch (error) {
-    console.error("ERROR:", error);
+  try {
+} catch (error) {
+  console.error(error);
+}
   } finally {
     isLoading = false;
     btn.textContent = "Load More Themes";
