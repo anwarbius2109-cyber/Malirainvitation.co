@@ -806,55 +806,140 @@
 const baseUrl = "https://webinvit.id";
 const phoneNumber = "6281261233730";
 
-let nextPageUrl = baseUrl + "/seller/api/v1/products/websites?limit=12";
-let isLoading = false;
+const categoryUrl = baseUrl + "/seller/api/v1/categories";
 
-async function loadThemes() {
+let nextPageUrl = baseUrl + "/seller/api/v1/products/websites?limit=50";
+let allThemes = [];
+let filteredThemes = [];
+let currentCategoryId = null;
+
+// ================= LOAD ALL THEMES =================
+async function loadAllThemes() {
   const container = document.getElementById("themes");
-  const btn = document.getElementById("loadMore");
+  container.innerHTML = "Loading semua tema...";
 
-  btn.textContent = "Loading...";
+  let url = nextPageUrl;
 
   try {
-    const res = await fetch(nextPageUrl);
+    while (url) {
+      const res = await fetch(url);
+      const result = await res.json();
+
+      const data = result.data.data;
+      allThemes = allThemes.concat(data);
+
+      url = result.data.next_page_url;
+    }
+
+    renderThemes(allThemes);
+
+  } catch (err) {
+    console.log(err);
+    container.innerHTML = "Gagal load tema";
+  }
+}
+
+// ================= RENDER =================
+function renderThemes(data) {
+  const container = document.getElementById("themes");
+  const resultCount = document.getElementById("resultCount");
+
+  container.innerHTML = "";
+
+  resultCount.textContent = data.length + " tema ditemukan";
+
+  data.forEach(function(theme) {
+    const card = document.createElement("div");
+
+    card.innerHTML =
+      '<div class="bg-card rounded shadow-lg hover:shadow-2xl transition duration-300">' +
+        '<div class="aspect-square overflow-hidden">' +
+          '<img src="' + theme.featured_image + '" class="w-full h-full object-cover">' +
+        '</div>' +
+        '<div class="p-3">' +
+          '<h3 class="font-bold mb-2">' + theme.name + '</h3>' +
+          '<div class="grid grid-cols-2 gap-2">' +
+            '<a href="' + baseUrl + '/preview/' + theme.slug + '" target="_blank" class="bg-gray-200 text-center p-1 rounded">Preview</a>' +
+            '<a href="https://wa.me/' + phoneNumber + '?text=Pesan+' + theme.name + '" target="_blank" class="bg-purple-500 text-white text-center p-1 rounded">Pesan</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    container.appendChild(card);
+  });
+}
+
+// ================= SEARCH =================
+document.getElementById("searchInput").addEventListener("input", function () {
+  applyFilter();
+});
+
+// ================= FILTER GABUNG =================
+function applyFilter() {
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
+
+  filteredThemes = allThemes.filter(function(theme) {
+    const matchName = theme.name.toLowerCase().includes(keyword);
+    const matchCategory = currentCategoryId
+      ? theme.category_id == currentCategoryId
+      : true;
+
+    return matchName && matchCategory;
+  });
+
+  renderThemes(filteredThemes);
+}
+
+// ================= LOAD CATEGORIES =================
+async function loadCategories() {
+  const container = document.getElementById("categories");
+
+  try {
+    const res = await fetch(categoryUrl);
     const result = await res.json();
+    const categories = result.data;
 
-    const themes = result.data.data;
+    // tombol ALL
+    const allBtn = document.createElement("button");
+    allBtn.textContent = "Semua";
+    allBtn.className = "btn m-1 category-active";
+    allBtn.onclick = function () {
+      currentCategoryId = null;
+      setActive(this);
+      applyFilter();
+    };
+    container.appendChild(allBtn);
 
-    nextPageUrl = result.data.next_page_url;
+    categories.forEach(function(cat) {
+      const btn = document.createElement("button");
+      btn.textContent = cat.name;
+      btn.className = "btn m-1";
 
-    themes.forEach(function(theme) {
-      var card = document.createElement("div");
+      btn.onclick = function () {
+        currentCategoryId = cat.id;
+        setActive(this);
+        applyFilter();
+      };
 
-      var html = '';
-      html += '<div class="bg-card rounded shadow-lg">';
-      html += '<div class="aspect-square overflow-hidden">';
-      html += '<img src="' + theme.featured_image + '" class="w-full h-full object-cover">';
-      html += '</div>';
-      html += '<div class="p-3">';
-      html += '<h3 class="font-bold mb-2">' + theme.name + '</h3>';
-      html += '<div class="grid grid-cols-2 gap-2">';
-      html += '<a href="' + baseUrl + '/preview/' + theme.slug + '" target="_blank" class="bg-gray-200 text-center p-1 rounded">Preview</a>';
-      html += '<a href="https://wa.me/' + phoneNumber + '?text=Pesan+' + theme.name + '" target="_blank" class="bg-purple-500 text-white text-center p-1 rounded">Pesan</a>';
-      html += '</div>';
-      html += '</div>';
-      html += '</div>';
-
-      card.innerHTML = html;
-      container.appendChild(card);
+      container.appendChild(btn);
     });
 
   } catch (err) {
     console.log(err);
   }
-
-  btn.textContent = "Load More Themes";
 }
 
-document.getElementById("loadMore").addEventListener("click", loadThemes);
+// ================= ACTIVE BUTTON =================
+function setActive(el) {
+  document.querySelectorAll("#categories button").forEach(btn => {
+    btn.classList.remove("category-active");
+  });
+  el.classList.add("category-active");
+}
 
-// load pertama
-loadThemes();
+// ================= INIT =================
+loadCategories();
+loadAllThemes();
 </script>
   </body>
 </html>
