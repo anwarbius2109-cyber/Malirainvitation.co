@@ -849,18 +849,31 @@
         allThemes.push(theme);
 
         const card = document.createElement("div");
-        card.classList.add("theme-item");
-        const keywords = theme.name.toLowerCase();
+        document.getElementById("searchInput").addEventListener("keyup", function () {
+  const keyword = this.value.toLowerCase().trim();
+  const items = document.querySelectorAll(".theme-item");
+  const loadMoreBtn = document.getElementById("loadMore");
 
-let extra = "";
+  // kalau kosong → tampilkan semua
+  if (keyword === "") {
+    items.forEach(item => item.style.display = "block");
+    loadMoreBtn.style.display = "inline-flex";
+    return;
+  }
 
-if (keywords.includes("jawa")) extra += " javanese adat jawa solo jogja";
-if (keywords.includes("minang")) extra += " padang minangkabau";
-if (keywords.includes("batak")) extra += " medan batak toba";
-if (keywords.includes("sunda")) extra += " sunda bandung";
-if (keywords.includes("modern")) extra += " simple clean elegan";
+  // kalau sedang search → sembunyikan load more
+  loadMoreBtn.style.display = "none";
 
-card.setAttribute("data-search", keywords + extra);
+  items.forEach((item) => {
+    const text = item.getAttribute("data-search") || ""; // ⛔ anti null
+
+    if (text.includes(keyword)) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+});
 
         card.innerHTML = `
           <div class="bg-card rounded shadow-lg hover:shadow-2xl transition duration-300">
