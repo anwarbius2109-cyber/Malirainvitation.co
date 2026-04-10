@@ -855,28 +855,28 @@
 
     themes.forEach((theme) => {
       const card = document.createElement("div");
-      card.className = "theme-item";
+card.className = "theme-item";
 
-      card.innerHTML = `
-        <div class="bg-card rounded shadow-lg hover:shadow-2xl transition duration-300">
-          <div class="aspect-square rounded overflow-hidden">
-            <img src="${theme.featured_image}" class="size-full object-cover" />
-          </div>
-          <div class="p-2 sm:p-4">
-            <h3 class="font-bold leading-tight mb-3">${theme.name}</h3>
-            <div class="grid gap-2 sm:grid-cols-2">
-              <a href="${baseUrl}/preview/${theme.slug}" target="_blank"
-                class="btn text-sm rounded h-8 px-2 bg-secondary text-black">
-                Preview
-              </a>
-              <a href="https://wa.me/${phoneNumber}?text=Saya+mau+pesan+tema+${theme.name}" target="_blank"
-                class="btn text-sm rounded h-8 px-2 bg-primary text-white">
-                Pesan
-              </a>
-            </div>
-          </div>
-        </div>
-      `;
+card.innerHTML = `
+  <div class="bg-card rounded shadow-lg hover:shadow-2xl transition duration-300">
+    <div class="aspect-square rounded overflow-hidden">
+      <img src="${theme.featured_image}" class="size-full object-cover" />
+    </div>
+    <div class="p-2 sm:p-4">
+      <h3 class="font-bold leading-tight mb-3">${theme.name}</h3>
+      <div class="grid gap-2 sm:grid-cols-2">
+        <a href="${baseUrl}/preview/${theme.slug}" target="_blank"
+          class="btn text-sm rounded h-8 px-2 bg-secondary text-black">
+          Preview
+        </a>
+        <a href="https://wa.me/${phoneNumber}?text=Saya+mau+pesan+tema+${theme.name}" target="_blank"
+          class="btn text-sm rounded h-8 px-2 bg-primary text-white">
+          Pesan
+        </a>
+      </div>
+    </div>
+  </div>
+`;
 
       container.appendChild(card);
     });
