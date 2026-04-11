@@ -945,6 +945,7 @@ loadAllThemes();
   <a href="#problem">⚠️<br>Problem</a>
   <a href="#solusi">💡<br>Solusi</a>
   <a href="#tema">🎨<br>Tema</a>
+  <a href="#paket">💰<br>Paket</a>
   <a href="#faq">❓<br>FAQs</a>
 </nav>
 
@@ -958,28 +959,30 @@ loadAllThemes();
   background: #6d28d9;
   display: none;
   justify-content: space-around;
-  padding: 8px 5px;
+  padding: 8px 4px;
   z-index: 9999;
   box-shadow: 0 -3px 15px rgba(0,0,0,0.25);
 }
 
+/* ITEM MENU */
 .mobile-bottom-nav a {
   color: #fff;
   text-decoration: none;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   text-align: center;
   line-height: 1.2;
-  opacity: 0.8;
+  opacity: 0.9;
   transition: 0.2s;
+  flex: 1;
 }
 
+/* HOVER & TAP */
 .mobile-bottom-nav a:hover {
   opacity: 1;
   transform: scale(1.1);
 }
 
-/* ACTIVE EFFECT (klik) */
 .mobile-bottom-nav a:active {
   transform: scale(0.95);
 }
@@ -997,7 +1000,7 @@ loadAllThemes();
 
   /* biar konten gak ketutup */
   body {
-    padding-bottom: 75px;
+    padding-bottom: 80px;
   }
 }
 </style>
