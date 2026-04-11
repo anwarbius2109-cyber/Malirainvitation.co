@@ -1,0 +1,65 @@
+/* ===== FIX KONTRAS TEXT ===== */
+
+/* TEXT UMUM BIAR LEBIH TERANG */
+body {
+  color: #f5f2ff;
+}
+
+/* PARAGRAPH */
+p {
+  color: #dcd6ff;
+}
+
+/* LINK */
+a {
+  color: #ffffff;
+}
+
+a:hover {
+  color: #c6b8ff;
+}
+
+/* JUDUL CARD / ITEM */
+.bg-card h3 {
+  color: #ffffff;
+}
+
+/* TEXT DI DALAM CARD */
+.bg-card p {
+  color: #d6d0ff;
+}
+
+/* BUTTON PREVIEW (BIAR KELIHATAN) */
+.bg-gray-200 {
+  background: rgba(255,255,255,0.15) !important;
+  color: #ffffff !important;
+}
+
+/* BUTTON PESAN */
+.bg-purple-500 {
+  background: linear-gradient(135deg, #7b4bff, #a98bff) !important;
+  color: #fff !important;
+}
+
+/* CATEGORY BUTTON */
+#categories button {
+  color: #2d1b4e;
+}
+
+.category-active {
+  color: #fff !important;
+}
+
+/* FAQ TEXT */
+details p {
+  color: #dcd6ff;
+}
+
+/* NAVBAR LINK */
+.navbar a {
+  color: #e9e4ff;
+}
+
+.navbar a:hover {
+  color: #ffffff;
+}
