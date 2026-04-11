@@ -832,72 +832,37 @@ async function loadAllThemes() {
 // ================= RENDER =================
 function renderThemes(data) {
   const container = document.getElementById("themes");
+  const resultCount = document.getElementById("resultCount");
+
+  if (!container) return;
+
   container.innerHTML = "";
 
-  if (data.length === 0) {
-    container.innerHTML = "<p class='text-center col-span-full'>Tema tidak ditemukan</p>";
-    return;
+  if (resultCount) {
+    resultCount.textContent = data.length + " tema ditemukan";
   }
 
-  // 🔥 GROUP BY CATEGORY NAME
-  const grouped = {};
+  data.forEach(function(theme) {
+    const card = document.createElement("div");
 
-  data.forEach(theme => {
-    if (!theme.category_name) return; // ❌ skip kalau tidak ada kategori
-const catName = theme.category_name;
-    // ❌ skip SYUKURAN
-    if (catName.toLowerCase().includes("syukuran")) return;
-
-    if (!grouped[catName]) {
-      grouped[catName] = [];
-    }
-
-    grouped[catName].push(theme);
-  });
-
-  // 🔥 LOOP PER KATEGORI
-  Object.keys(grouped).forEach(category => {
-
-    // ===== BAR KATEGORI =====
-    const title = document.createElement("div");
-    title.className = "col-span-full mt-10 mb-4";
-
-    title.innerHTML = `
-      <div class="bg-gradient-to-r from-purple-600 to-purple-400 text-white px-5 py-3 rounded-xl shadow-lg font-bold text-lg">
-        ${category}
-      </div>
-    `;
-
-    container.appendChild(title);
-
-    // ===== WRAPPER GRID =====
-    const grid = document.createElement("div");
-    grid.className = "col-span-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4";
-
-    // ===== ISI THEMES =====
-    grouped[category].forEach(theme => {
-      const card = document.createElement("div");
-
-      card.innerHTML =
-        '<div class="bg-card rounded shadow-lg">' +
-          '<div class="aspect-square overflow-hidden">' +
-            '<img src="' + theme.featured_image + '" class="w-full h-full object-cover">' +
+    card.innerHTML =
+      '<div class="bg-card rounded shadow-lg">' +
+        '<div class="aspect-square overflow-hidden">' +
+          '<img src="' + theme.featured_image + '" class="w-full h-full object-cover">' +
+        '</div>' +
+        '<div class="p-3">' +
+          '<h3 class="font-bold mb-2">' + theme.name + '</h3>' +
+          '<div class="grid grid-cols-2 gap-2">' +
+            '<a href="' + baseUrl + '/preview/' + theme.slug + '" target="_blank" class="bg-gray-200 text-center p-1 rounded">Preview</a>' +
+            '<a href="https://wa.me/' + phoneNumber + '?text=Pesan+' + theme.name + '" target="_blank" class="bg-purple-500 text-white text-center p-1 rounded">Pesan</a>' +
           '</div>' +
-          '<div class="p-3">' +
-            '<h3 class="font-bold mb-2">' + theme.name + '</h3>' +
-            '<div class="grid grid-cols-2 gap-2">' +
-              '<a href="' + baseUrl + '/preview/' + theme.slug + '" target="_blank" class="bg-gray-200 text-center p-1 rounded">Preview</a>' +
-              '<a href="https://wa.me/' + phoneNumber + '?text=Pesan+' + theme.name + '" target="_blank" class="bg-purple-500 text-white text-center p-1 rounded">Pesan</a>' +
-            '</div>' +
-          '</div>' +
-        '</div>';
+        '</div>' +
+      '</div>';
 
-      grid.appendChild(card);
-    });
-
-    container.appendChild(grid);
+    container.appendChild(card);
   });
 }
+
 // ================= SEARCH =================
 document.getElementById("searchInput").addEventListener("input", function () {
   applyFilter();
@@ -961,6 +926,7 @@ async function loadCategories() {
     console.log(err);
   }
 }
+
 // ================= ACTIVE BUTTON =================
 function setActive(el) {
   document.querySelectorAll("#categories button").forEach(btn => {
