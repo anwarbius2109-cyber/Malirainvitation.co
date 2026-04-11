@@ -843,8 +843,8 @@ function renderThemes(data) {
   const grouped = {};
 
   data.forEach(theme => {
-    const catName = theme.category_name || "Kategori Lain";
-
+    if (!theme.category_name) return; // ❌ skip kalau tidak ada kategori
+const catName = theme.category_name;
     // ❌ skip SYUKURAN
     if (catName.toLowerCase().includes("syukuran")) return;
 
